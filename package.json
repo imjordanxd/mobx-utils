@@ -2,7 +2,7 @@
   "name": "mobx-utils",
   "version": "6.1.1",
   "description": "Utility functions and common patterns for MobX",
-  "main": "mobx-utils.umd.js",
+  "main": "mobx-utils.cjs.js",
   "module": "mobx-utils.module.js",
   "jsnext:main": "mobx-utils.module.js",
   "react-native": "mobx-utils.module.js",
@@ -11,7 +11,7 @@
     ".": {
       "types": "./lib/mobx-utils.d.ts",
       "module": "./mobx-utils.module.js",
-      "default": "./mobx-utils.umd.js"
+      "default": "./mobx-utils.cjs.js"
     },
     "./package.json": "./package.json"
   },
@@ -36,7 +36,7 @@
   },
   "files": [
     "lib/",
-    "mobx-utils.umd.js",
+    "mobx-utils.cjs.js",
     "mobx-utils.module.js"
   ],
   "devDependencies": {
