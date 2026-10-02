@@ -7,6 +7,14 @@
   "jsnext:main": "mobx-utils.module.js",
   "react-native": "mobx-utils.module.js",
   "typings": "lib/mobx-utils.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/mobx-utils.d.ts",
+      "module": "./mobx-utils.module.js",
+      "default": "./mobx-utils.umd.js"
+    },
+    "./package.json": "./package.json"
+  },
   "sideEffects": false,
   "scripts": {
     "prettier": "prettier --write \"**/*.js\" \"**/*.jsx\" \"**/*.tsx\" \"**/*.ts\"",
