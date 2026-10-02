@@ -124,7 +124,7 @@ test("array", () => {
 
 test("map", () => {
     assertChanges({}, (o: any) => {
-        const x = observable.map({})
+        const x = observable.map<string, any>({})
         o.x = x
         x.set("a", { a: 1 })
         x.get("a").a = 2

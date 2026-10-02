@@ -18,7 +18,8 @@
             "es2015.promise",
             "es2015.generator",
             "es2015.iterable",
-            "es2018.asyncgenerator"
+            "es2018.asyncgenerator",
+            "esnext.collection"
         ]
     },
     "exclude": ["node_modules"]
