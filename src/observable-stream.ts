@@ -1,4 +1,5 @@
-import { computed, observable, action, runInAction, observe, makeObservable } from "mobx"
+import { computed, runInAction, observe, makeObservable } from "mobx"
+import { actionBound, observableRef } from "./mobx-compat"
 
 declare var Symbol: any
 
@@ -81,11 +82,16 @@ export function toStream<T>(
 }
 
 class StreamListener<T> implements IStreamObserver<T> {
-    @observable.ref current!: T
+    current!: T
     subscription!: ISubscription
 
     constructor(observable: IObservableStream<T>, initialValue: T) {
-        makeObservable(this)
+        makeObservable(this, {
+            current: observableRef,
+            next: actionBound,
+            complete: actionBound,
+            error: actionBound,
+        })
         runInAction(() => {
             this.current = initialValue
             this.subscription = observable.subscribe(this)
@@ -98,17 +104,14 @@ class StreamListener<T> implements IStreamObserver<T> {
         }
     }
 
-    @action.bound
     next(value: T) {
         this.current = value
     }
 
-    @action.bound
     complete() {
         this.dispose()
     }
 
-    @action.bound
     error(value: T) {
         this.current = value
         this.dispose()

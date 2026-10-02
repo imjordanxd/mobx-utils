@@ -15,6 +15,7 @@ import {
     makeObservable,
 } from "mobx"
 import { ComputedValue } from "mobx/dist/internal"
+import { actionBound } from "./mobx-compat"
 import { invariant, getAllMethodsAndProperties } from "./utils"
 
 /**
@@ -76,18 +77,22 @@ export class ViewModel<T> implements IViewModel<T> {
     localValues: ObservableMap<keyof T, T[keyof T]> = observable.map({})
     localComputedValues: ObservableMap<keyof T, IComputedValue<T[keyof T]>> = observable.map({})
 
-    @computed
     get isDirty() {
         return this.localValues.size > 0
     }
 
-    @computed
-    get changedValues() {
+    get changedValues(): Map<keyof T, T[keyof T]> {
         return new Map(this.localValues)
     }
 
     constructor(public model: T) {
-        makeObservable(this)
+        makeObservable(this, {
+            isDirty: computed,
+            changedValues: computed,
+            submit: actionBound,
+            reset: actionBound,
+            resetProperty: actionBound,
+        })
         invariant(isObservableObject(model), "createViewModel expects an observable object")
         const ownMethodsAndProperties = getAllMethodsAndProperties(this)
 
@@ -138,7 +143,6 @@ export class ViewModel<T> implements IViewModel<T> {
         return this.localValues.has(key)
     }
 
-    @action.bound
     submit() {
         keys<keyof T>(this.localValues).forEach((key) => {
             const source = this.localValues.get(key)!
@@ -155,12 +159,10 @@ export class ViewModel<T> implements IViewModel<T> {
         this.localValues.clear()
     }
 
-    @action.bound
     reset() {
         this.localValues.clear()
     }
 
-    @action.bound
     resetProperty(key: keyof T) {
         this.localValues.delete(key)
     }
