@@ -10,7 +10,6 @@
         "noImplicitAny": true,
         "strict": true,
         "moduleResolution": "bundler",
-        "experimentalDecorators": true,
         "useDefineForClassFields": true,
         "lib": [
             "dom",
