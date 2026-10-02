@@ -6,8 +6,8 @@ import {
     action,
     getDependencyTree,
     getObserverTree,
+    comparer,
 } from "mobx"
-import { compareStructural } from "../src/mobx-compat"
 
 const john = {
     name: "john",
@@ -165,7 +165,7 @@ test("make sure the fn is cached", () => {
 test("supports options", () => {
     const events: number[][] = []
     const xs = observable([1, 2, 3])
-    const xsLessThan = computedFn((n) => xs.filter((x) => x < n), { equals: compareStructural })
+    const xsLessThan = computedFn((n) => xs.filter((x) => x < n), { equals: comparer.structural })
 
     autorun(() => events.push(xsLessThan(3)))
     expect(events).toEqual([[1, 2]])

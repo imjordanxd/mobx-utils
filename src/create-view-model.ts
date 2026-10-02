@@ -15,7 +15,6 @@ import {
     makeObservable,
 } from "mobx"
 import { ComputedValue } from "mobx/dist/internal"
-import { actionBound } from "./mobx-compat"
 import { invariant, getAllMethodsAndProperties } from "./utils"
 
 /**
@@ -89,9 +88,9 @@ export class ViewModel<T> implements IViewModel<T> {
         makeObservable(this, {
             isDirty: computed,
             changedValues: computed,
-            submit: actionBound,
-            reset: actionBound,
-            resetProperty: actionBound,
+            submit: action.bound,
+            reset: action.bound,
+            resetProperty: action.bound,
         })
         invariant(isObservableObject(model), "createViewModel expects an observable object")
         const ownMethodsAndProperties = getAllMethodsAndProperties(this)

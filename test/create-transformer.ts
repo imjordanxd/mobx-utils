@@ -1,6 +1,5 @@
 import { createTransformer } from "../src/mobx-utils"
 import * as m from "mobx"
-import { compareStructural } from "../src/mobx-compat"
 
 test("transform1", () => {
     let todoCalc = 0
@@ -1388,7 +1387,7 @@ test("supports computed value options", () => {
     const events: number[][] = []
     const xs = m.observable([1, 2, 3])
     const xsLessThan = createTransformer<number, number[]>((n) => xs.filter((x) => x < n), {
-        equals: compareStructural,
+        equals: m.comparer.structural,
     })
 
     m.autorun(() => events.push(xsLessThan(3)))
