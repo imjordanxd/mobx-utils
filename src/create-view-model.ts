@@ -140,7 +140,7 @@ export class ViewModel<T> implements IViewModel<T> {
 
     @action.bound
     submit() {
-        keys(this.localValues).forEach((key: keyof T) => {
+        keys<keyof T>(this.localValues).forEach((key) => {
             const source = this.localValues.get(key)!
             const destination = this.model[key]
             if (isObservableArray(destination)) {
